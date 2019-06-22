@@ -1,3 +1,3 @@
 # Torch Utilities
 
-This repo contains utility function that constantly reuse when writing code with PyTorch.
+This repo contains some utility functions that I concstantly reuse when writing experiment code using PyTorch. 
