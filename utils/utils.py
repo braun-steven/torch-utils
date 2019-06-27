@@ -1,6 +1,7 @@
 """
 Utilities for PyTorch experiments.
 """
+
 from typing import List
 import argparse
 import datetime
@@ -14,6 +15,7 @@ import time
 import numpy as np
 
 import torch
+import torchvision
 from torch import nn
 
 logger = logging.getLogger(__name__)
@@ -47,7 +49,7 @@ def ensure_dir(path: str):
         path (str): Directory path.
     """
     if not os.path.exists(path):
-        os.makepathirs(path)
+        os.makedirs(path)
 
 
 def count_params(model: torch.nn.Module) -> int:
@@ -233,3 +235,25 @@ def clone_args(args: argparse.Namespace) -> argparse.Namespace:
     # Create experiment dir
     ensure_dir(tmp_args.experiment_name)
     return tmp_args
+
+
+def plot_samples(x: torch.Tensor, y: torch.Tensor):
+    """
+    Plot a single sample witht the target and prediction in the title.
+
+    Args:
+        x (torch.Tensor): Batch of input images. Has to be shape: [N, C, H, W].
+        y (torch.Tensor): Target.
+        y_pred: Target prediction.
+        loss: Loss value.
+    """
+    import matplotlib.pyplot as plt
+
+    # Normalize in valid range
+    x = (x - x.min()) / (x.max() - x.min())
+    tensors = torchvision.utils.make_grid(x, nrow=8, padding=1)
+
+    # Permute channels and h/w for matplotlib
+    plt.imshow(tensors.permute(1, 2, 0))
+    plt.title("y={}".format(y.squeeze().numpy()))
+    plt.show()
