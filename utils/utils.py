@@ -147,7 +147,14 @@ def set_cuda_device(cuda_device_id):
         cuda_device_id (List[int]): List of physical cuda device ids.
 
     """
-    os.environ["CUDA_VISIBLE_DEVICES"] = ",".join([str(x) for x in cuda_device_id])
+    key = "CUDA_VISIBLE_DEVICES"
+    new_val = ",".join([str(x) for x in cuda_device_id])
+    if key in os.environ:
+        val = os.environ[key]
+        logger.warning(
+            f'Environment variable "{key}" exists with value "{val}". Overwriting with "{new_val}".'
+        )
+    os.environ[key] = new_val
 
 
 def make_multi_gpu(model: torch.nn.Module, cuda_device_id: List):
