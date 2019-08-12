@@ -31,7 +31,7 @@ The following is a quick example on how to use qdaq:
 
 ```python
 import torch
-from qdaq.qdaq import Job, start
+from utils.qdaq import Job, start
 
 
 # Create a job class that implements `run`
