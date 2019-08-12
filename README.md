@@ -24,8 +24,8 @@ def plot_samples(x: torch.Tensor, y: torch.Tensor): ...
 `qdaq` makes running multiple PyTorch or Tensorflow experiments on more than one GPU easy.
 The typical use case is e.g. a gridsearch over hyperparameters for the same experiment with a bunch of GPUs available. Usually it would be necessary to manually split the hyperparameter space and start the experiments on different GPUs. This has multiple drawbacks:
 
-- Tendious to split experiments by hand
-- If 10 experiments are sequentially started on GPU0 and 10 on GPU1 it might happen that GPU0 finishes way earlier while GPU1 is still running with a queue of experiments. This results in unused GPU time on GPU0 (bad load balancing)
+- It's tedious to split experiments by hand.
+- If 10 experiments are sequentially started on GPU0 and 10 on GPU1 it might happen that GPU0 finishes way earlier while GPU1 is still running with a queue of experiments. This results in unused GPU time on GPU0 (bad load balancing).
 
 The main function is to provide a multiprocessing queue with available cuda devices. The idea is to define a `Job`, e.g. your experiment, create a bunch of jobs with different settings, specify a list of available cuda devices and let the internals handle the rest. In the background each job is put into a queue and grabs a cuda device as soon as it is available.
 
