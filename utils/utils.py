@@ -143,6 +143,8 @@ def set_cuda_device(cuda_device_id):
     if `cuda_device_id` == [3, 4, 5], then torch.device('cuda:0') will point to
     the physical GPU #3.
 
+    Warning is logged if `CUDA_VISIBLE_DEVICES` has already been set in the environment.
+
     Args:
         cuda_device_id (List[int]): List of physical cuda device ids.
 
