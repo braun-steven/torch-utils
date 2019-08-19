@@ -240,9 +240,6 @@ def clone_args(args: argparse.Namespace) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     tmp_args = parser.parse_args(args=[])
     tmp_args.__dict__ = args.__dict__.copy()
-
-    # Create experiment dir
-    ensure_dir(tmp_args.experiment_name)
     return tmp_args
 
 

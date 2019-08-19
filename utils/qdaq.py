@@ -55,8 +55,11 @@ def start(jobs: List[Job], cuda_device_ids: Union[List[int], List[List[int]]]):
     Start the given jobs on the list of cuda devices.
 
     Args:
-        jobs (List[Job]): [TODO:description]
-        cuda_device_ids (Union[List[int], List[List[int]]]): [TODO:description]
+        jobs (List[Job]): List of jobs to start.
+        cuda_device_ids (Union[List[int], List[List[int]]]):
+            List of available cuda devices on which the jobs will be distributed.
+            The list can either consist of single devices ([0, 1, 2, 3]) or device pairs
+            ([[0, 1], [2, 3]]).
     """
     assert len(jobs) > 0, "No jobs specified."
     assert len(cuda_device_ids) > 0, "No cuda devices specified."
@@ -82,4 +85,3 @@ def start(jobs: List[Job], cuda_device_ids: Union[List[int], List[List[int]]]):
     # Join processes
     for p in processes:
         p.join()
-
