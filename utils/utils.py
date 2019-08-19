@@ -156,7 +156,9 @@ def set_cuda_device(cuda_device_id):
     if key in os.environ:
         val = os.environ[key]
         logger.warning(
-            f'Environment variable "{key}" exists with value "{val}". Overwriting with "{new_val}".'
+            'Environment variable "{}" exists with value "{}". Overwriting with "{}".'.format(
+                key, val, new_val
+            )
         )
     os.environ[key] = new_val
 
