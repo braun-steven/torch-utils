@@ -2,6 +2,8 @@
 
 This repo contains some utility functions that I constantly reuse when writing experiment code using PyTorch. 
 
+Feel free to contribute your helper functions which you could not live without!
+
 ## Utils
 
 ```python
