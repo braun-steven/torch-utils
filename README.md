@@ -4,7 +4,7 @@ This repo contains some utility functions that I constantly reuse when writing e
 
 Feel free to contribute your helper functions which you could not live without!
 
-## Utils
+## Utility Functions
 
 ```python
 def time_delta_now(t_start: float) -> str: ...
