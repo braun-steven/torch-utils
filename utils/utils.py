@@ -38,7 +38,9 @@ def time_delta_now(t_start: float) -> str:
     minutes = round(c // 60 % 60)
     seconds = round(c % 60)
     millisecs = round(c % 1 * 1000)
-    return f"{days} days, {hours} hours, {minutes} minutes, {seconds} seconds, {millisecs} milliseconds"
+    return "{} days, {} hours, {} minutes, {} seconds, {} milliseconds".format(
+        days, hours, minutes, seconds, millisecs
+    )
 
 
 def ensure_dir(path: str):
