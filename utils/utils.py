@@ -23,12 +23,12 @@ logger = logging.getLogger(__name__)
 
 def time_delta_now(t_start: float) -> str:
     """
-    Convert a timestamp into a human readable timestring.
+    Convert the difference of the given timestamp and now into a human readable timestring.
     Args:
-        t_start (float): Timestamp.
+        t_start (float): Start timestamp.
 
     Returns:
-        Human readable timestring.
+        Human readable timestring of time passed between `t_start` and now.
     """
     a = t_start
     b = time.time()  # current epoch time
@@ -68,13 +68,16 @@ def count_params(model: torch.nn.Module) -> int:
 
 
 def generate_run_base_dir(
-    result_dir: str, timestamp: int = None, tag: str = None, sub_dirs: List = None
+    result_dir: str, timestamp: int = None, tag: str = None, sub_dirs: List[str] = None
 ) -> str:
     """
     Generate a base directory for each experiment run.
     Looks like this: result_dir/date_tag/sub_dir_1/.../sub_dir_n
     Args:
         result_dir (str): Experiment output directory.
+        timestamp (int): Timestamp which will be inlcuded in the form of '%y%m%d_%H%M'.
+        tag (str): Tag after timestamp.
+        sub_dirs (List[str]): List of subdirectories that should be created.
 
     Returns:
         str: Directory name.
@@ -100,27 +103,27 @@ def generate_run_base_dir(
     return base_dir
 
 
-def setup_logging(filename: str = "log.txt", level: str = "INFO"):
+def setup_logging(log_file_path: str = "log.txt", level: str = "INFO"):
     """
-    Setup global loggers.
+    Setup global loggers. Logs to stdout and the given log file.
 
     Args:
-        filename: Log file destination.
-        level: Log level.
+        log_file_path (str): Log file destination.
+        level (str): Log level.
     """
     # Make sure the directory actually exists
-    ensure_dir(os.path.dirname(filename))
+    ensure_dir(os.path.dirname(log_file_path))
 
     # Check if previous log exists since logging.FileHandler only appends
-    if os.path.exists(filename):
-        os.remove(filename)
+    if os.path.exists(log_file_path):
+        os.remove(log_file_path)
 
     logging.basicConfig(
         level=logging.getLevelName(level.upper()),
         format="%(asctime)s - %(levelname)s - %(message)s",
         handlers=[
             logging.StreamHandler(stream=sys.stdout),
-            logging.FileHandler(filename=filename),
+            logging.FileHandler(filename=log_file_path),
         ],
     )
 
@@ -137,7 +140,7 @@ def set_seed(seed: int):
     torch.manual_seed(seed)
 
 
-def set_cuda_device(cuda_device_id):
+def set_cuda_device(cuda_device_id: List[int]):
     """
     Set the `CUDA_VISIBLE_DEVICES` environment variable to the list of device ids.
 
@@ -166,6 +169,8 @@ def set_cuda_device(cuda_device_id):
 def make_multi_gpu(model: torch.nn.Module, cuda_device_id: List):
     """
     Distribute a given model across the cuda device list.
+
+    If cuda_device_id == [-1], all available cuda devices will be selected.
 
     Args:
         model (torch.nn.Module): Model which is to be distributed across the cuda devices.
@@ -264,6 +269,7 @@ def plot_samples(x: torch.Tensor, y: torch.Tensor):
     tensors = torchvision.utils.make_grid(x, nrow=8, padding=1)
 
     # Permute channels and h/w for matplotlib
+    plt.figure()
     plt.imshow(tensors.permute(1, 2, 0))
     plt.title("y={}".format(y.squeeze().numpy()))
     plt.show()
