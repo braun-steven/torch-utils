@@ -22,7 +22,7 @@ import argparse
 
 class Test(TestCase):
     def test_ensure_dir(self):
-        d = os.path.join(TMP, "a", "b", "c")
+        d = os.path.join(TMP, "a", "b", "c") + "/"
         ensure_dir(d)
         self.assertTrue(os.path.isdir(d))
 
@@ -50,7 +50,7 @@ class Test(TestCase):
         parser = argparse.ArgumentParser()
         args = parser.parse_args(args=[])
         args.__dict__ = {"name": "test", "foo": "bar"}
-        path = os.path.join(TMP, "args")
+        path = os.path.join(TMP, "args") + "/"
         ensure_dir(path)
         save_args(args, path)
         args_loaded = load_args(path)

@@ -100,7 +100,7 @@ def generate_run_base_dir(
         base_dir = date_str + "_" + tag
 
     # Create directory
-    base_dir = os.path.join(result_dir, base_dir, *sub_dirs)
+    base_dir = os.path.join(result_dir, base_dir, *sub_dirs) + "/"
     ensure_dir(base_dir)
     return base_dir
 
