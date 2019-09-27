@@ -42,16 +42,18 @@ def time_delta_now(t_start: float) -> str:
         days, hours, minutes, seconds, millisecs
     )
 
-
 def ensure_dir(path: str):
     """
     Ensure that a directory exists.
 
+    For 'foo/bar/baz.csv' the directories 'foo' and 'bar' will be created if not already present.
+
     Args:
         path (str): Directory path.
     """
-    if not os.path.exists(path):
-        os.makedirs(path)
+    d = os.path.dirname(path)
+    if not os.path.exists(d):
+        os.makedirs(d)
 
 
 def count_params(model: torch.nn.Module) -> int:
