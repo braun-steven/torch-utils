@@ -8,7 +8,7 @@ Feel free to contribute your helper functions which you could not live without!
 
 The following functions are available:
 
-- `time_delta_now`: Create a human readable time string of the time passed until not, given a timestamp.
+- `time_delta_now`: Create a human readable time string of the time passed until now, given a timestamp.
 - `ensure_dir`: Ensure that a directory exists.
 - `count_params`: Count the number of learnable parameters in an `nn.Module` object.
 - `generate_run_base_dir`: Generate a base directory for experiment runs.
